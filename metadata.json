@@ -1,0 +1,6 @@
+{
+  "name": "FEATOUS",
+  "description": "FEATOUS — Built for your era. High-end men's fashion brand showcase, Gen-Z streetwear, Activewear, Premium menswear, and Retro culture with dynamic Admin Panel and Video/Voice Reel Studio.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

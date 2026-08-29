@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Bodoni Moda', 'Cinzel', serif;
+    --font-cinzel: 'Cinzel', serif;
+    --font-italiana: 'Italiana', serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-syne: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  body {
+    background-color: #0A0A0A;
+    color: #E5E5E5;
+  }
+}
+
+.font-editorial-serif {
+  font-family: 'Bodoni Moda', serif;
+  font-optical-sizing: auto;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-italiana {
+  font-family: 'Italiana', serif;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'Space Mono', monospace;
+}
+
+/* Film grain effect for analog & retro editorial look */
+.film-grain {
+  position: relative;
+}
+
+.film-grain::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  z-index: 2;
+}
+
+/* Custom Bento minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Hide scrollbar for clean carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Polaroid frame effect */
+.polaroid-frame {
+  background: #ded8ce;
+  color: #121214;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.85);
+}
+
+/* Text glow for dark editorial */
+.glow-subtle {
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
