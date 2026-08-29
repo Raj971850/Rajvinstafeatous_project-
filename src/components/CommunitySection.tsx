@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { Instagram, Heart, Tag, Sparkles, Plus, MapPin } from 'lucide-react';
-import { CommunityLook } from '../types';
+import { CommunityLook, BrandConfig } from '../types';
 import { BRAND_CONFIG } from '../data/brandData';
 
 interface CommunitySectionProps {
   communityLooks: CommunityLook[];
   onOpenUgcModal: () => void;
   onOpenProductByName: (name: string) => void;
+  brandConfig?: BrandConfig;
 }
 
 export const CommunitySection: React.FC<CommunitySectionProps> = ({
   communityLooks,
   onOpenUgcModal,
   onOpenProductByName,
+  brandConfig,
 }) => {
   const [selectedCity, setSelectedCity] = useState<string>('ALL');
   const [likedLooks, setLikedLooks] = useState<Record<string, boolean>>({});
+
+  const hashtags = brandConfig?.hashtags || BRAND_CONFIG.hashtags;
+  const handle = brandConfig?.handle || '@FEATOUS';
 
   const cities = ['ALL', 'London, UK', 'Tokyo, Japan', 'Berlin, Germany', 'New York, USA', 'Seoul, South Korea', 'Milan, Italy'];
 
@@ -46,7 +51,7 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({
 
             {/* Hashtag List */}
             <div className="flex flex-wrap items-center gap-3 pt-3">
-              {BRAND_CONFIG.hashtags.map((tag) => (
+              {hashtags.map((tag) => (
                 <span
                   key={tag}
                   className="text-xs font-mono-code text-[#aaa] font-semibold hover:text-white transition-colors cursor-pointer"
@@ -63,7 +68,7 @@ export const CommunitySection: React.FC<CommunitySectionProps> = ({
             className="self-start md:self-auto px-5 py-2.5 bg-[#151515] hover:bg-white text-[#E5E5E5] hover:text-black border border-[#333] rounded-xl transition-all text-xs font-mono-code uppercase tracking-widest flex items-center space-x-2 shadow-md"
           >
             <Plus size={14} />
-            <span>TAG @FEATOUS TO BE FEATURED</span>
+            <span>TAG {handle} TO BE FEATURED</span>
           </button>
         </div>
 

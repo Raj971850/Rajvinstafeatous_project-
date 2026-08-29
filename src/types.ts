@@ -4,6 +4,9 @@ export interface BrandConfig {
   name: string;
   handle: string;
   instagramUrl: string;
+  instagramProfilePic?: string;
+  instagramBio?: string;
+  isVerified?: boolean;
   tagline: string;
   subheading: string;
   manifestoLead: string;
@@ -14,7 +17,12 @@ export interface BrandConfig {
     followers: string;
     following: string;
     dropsCompleted: string;
+    engagementRate?: string;
+    monthlyReach?: string;
   };
+  autoSyncInstagram?: boolean;
+  syncIntervalMinutes?: number;
+  lastSyncedAt?: string;
   heroImage: string;
   heroHeadline: string;
   heroBadge: string;

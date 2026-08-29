@@ -34,76 +34,94 @@ export const InstagramExperience: React.FC<InstagramExperienceProps> = ({
 
   const handle = brandConfig?.handle || '@FEATOUS';
   const instagramUrl = brandConfig?.instagramUrl || 'https://instagram.com/featous';
-  const stats = brandConfig?.stats || { followers: '148K', following: '210', posts: '184' };
+  const stats = brandConfig?.stats || { followers: '284K', following: '42', posts: '348' };
+  const profilePic = brandConfig?.instagramProfilePic || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop';
+  const bio = brandConfig?.instagramBio || 'Built for your era. Streetwear • Active • Premium • 90s Retro Archive.';
+  const isVerified = brandConfig?.isVerified ?? true;
+  const engagementRate = brandConfig?.stats.engagementRate;
+  const lastSynced = brandConfig?.lastSyncedAt;
 
   return (
     <section id="instagram-hub" className="w-full py-16 sm:py-24 bg-[#0A0A0A] text-[#E5E5E5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Instagram Profile Header Bento Card */}
-        <div className="bg-[#151515] border border-[#222] rounded-2xl p-6 sm:p-10 mb-12 relative overflow-hidden shadow-xl">
+        <div className="bg-[#151515] border border-[#222] rounded-3xl p-6 sm:p-10 mb-12 relative overflow-hidden shadow-2xl">
           {/* Subtle background glow */}
-          <div className="absolute -top-24 -right-24 w-72 h-72 bg-pink-500/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
             {/* Profile Avatar & Info */}
             <div className="flex items-center space-x-5 sm:space-x-6">
-              <div className="relative">
+              <div className="relative shrink-0">
                 {/* Gradient ring */}
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-[2px] bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 shadow-xl">
-                  <div className="w-full h-full rounded-full bg-black p-[2px]">
+                <div className="w-18 h-18 sm:w-22 sm:h-22 rounded-full p-[2.5px] bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 shadow-xl">
+                  <div className="w-full h-full rounded-full bg-black p-[2px] overflow-hidden">
                     <img
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop"
-                      alt="FEATOUS Instagram Avatar"
-                      className="w-full h-full object-cover rounded-full"
+                      src={profilePic}
+                      alt={`${handle} Instagram Avatar`}
+                      className="w-full h-full object-cover rounded-full transition-transform duration-500 hover:scale-105"
                       referrerPolicy="no-referrer"
                     />
                   </div>
                 </div>
-                <div className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 border-2 border-black">
-                  <CheckCircle2 size={12} className="text-white" />
-                </div>
+                {isVerified && (
+                  <div className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 border-2 border-black shadow-md">
+                    <CheckCircle2 size={13} className="text-white" />
+                  </div>
+                )}
               </div>
 
               <div>
-                <div className="flex items-center space-x-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <h3 className="font-editorial-serif text-xl sm:text-2xl font-bold tracking-wider text-white">
                     {handle}
                   </h3>
-                  <span className="px-2 py-0.5 bg-[#222] text-[9px] font-mono-code rounded-full text-[#aaa]">
+                  {isVerified && <CheckCircle2 size={16} className="text-blue-400" />}
+                  <span className="px-2 py-0.5 bg-[#222] text-[9px] font-mono-code rounded-full text-[#aaa] border border-[#333]">
                     OFFICIAL
                   </span>
+                  <span className="inline-flex items-center space-x-1 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-[9px] font-mono-code">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>LIVE SYNC</span>
+                  </span>
                 </div>
-                <p className="text-xs font-mono-code text-[#888] pt-1">
-                  Built for your era. Streetwear • Active • Premium • 90s Retro
+                <p className="text-xs font-mono-code text-[#888] pt-1.5 max-w-xl">
+                  {bio}
                 </p>
 
-                {/* Follower Stats */}
-                <div className="flex items-center space-x-6 pt-3 text-xs font-mono-code">
+                {/* Follower Stats & Live Metrics */}
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-3 text-xs font-mono-code">
                   <div>
                     <span className="font-bold text-white">{stats.posts}</span>{' '}
                     <span className="text-[#888]">posts</span>
                   </div>
                   <div>
-                    <span className="font-bold text-white">{stats.followers}</span>{' '}
+                    <span className="font-bold text-white transition-all duration-300">{stats.followers}</span>{' '}
                     <span className="text-[#888]">followers</span>
                   </div>
                   <div>
                     <span className="font-bold text-white">{stats.following}</span>{' '}
                     <span className="text-[#888]">following</span>
                   </div>
+                  {engagementRate && (
+                    <div className="hidden sm:block text-rose-300">
+                      <span className="font-bold">{engagementRate}</span>{' '}
+                      <span className="text-[#888]">engagement</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto pt-2 lg:pt-0">
               <a
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 md:flex-initial px-6 py-3 bg-white text-black hover:bg-[#E5E5E5] transition-all font-semibold text-xs uppercase tracking-widest flex items-center justify-center space-x-2 rounded-xl shadow-lg group"
+                className="flex-1 lg:flex-initial px-6 py-3.5 bg-white text-black hover:bg-[#E5E5E5] transition-all font-semibold text-xs uppercase tracking-widest flex items-center justify-center space-x-2 rounded-2xl shadow-xl group"
               >
-                <Instagram size={14} />
+                <Instagram size={15} />
                 <span>FOLLOW ON INSTAGRAM</span>
                 <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
@@ -112,7 +130,7 @@ export const InstagramExperience: React.FC<InstagramExperienceProps> = ({
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-3 bg-[#1a1a1a] hover:bg-[#222] text-white border border-[#2a2a2a] rounded-xl transition-all text-xs font-mono-code uppercase tracking-wider flex items-center justify-center space-x-1.5"
+                className="px-4 py-3.5 bg-[#1a1a1a] hover:bg-[#222] text-white border border-[#2a2a2a] rounded-2xl transition-all text-xs font-mono-code uppercase tracking-wider flex items-center justify-center space-x-1.5"
               >
                 <span>OPEN APP</span>
               </a>

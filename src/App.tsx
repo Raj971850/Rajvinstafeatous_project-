@@ -45,6 +45,7 @@ import {
 } from './types';
 import { isSupabaseConfigured } from './lib/supabase';
 import { fetchFromSupabase } from './lib/supabaseSync';
+import { INSTAGRAM_BROADCAST_EVENT } from './lib/instagramLiveSync';
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState<CollectionCategory>('ALL');
@@ -198,6 +199,48 @@ export default function App() {
     loadFromSupabase();
     return () => {
       isMounted = false;
+    };
+  }, []);
+
+  // Real-time Instagram Live Sync Event Listener (cross-component and cross-tab)
+  useEffect(() => {
+    const handleLiveSyncEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{
+        type: string;
+        brandConfig?: BrandConfig;
+        post?: InstagramPost;
+        posts?: InstagramPost[];
+      }>;
+      if (!customEvent.detail) return;
+
+      if (customEvent.detail.brandConfig) {
+        setBrandConfig(customEvent.detail.brandConfig);
+      }
+      if (customEvent.detail.post) {
+        setInstagramPosts((prev) => [customEvent.detail.post!, ...prev]);
+      }
+      if (customEvent.detail.posts) {
+        setInstagramPosts(customEvent.detail.posts);
+      }
+    };
+
+    window.addEventListener(INSTAGRAM_BROADCAST_EVENT, handleLiveSyncEvent);
+
+    let bc: BroadcastChannel | null = null;
+    try {
+      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+        bc = new BroadcastChannel('featous_instagram_channel');
+        bc.onmessage = (e) => {
+          if (e.data?.brandConfig) setBrandConfig(e.data.brandConfig);
+          if (e.data?.post) setInstagramPosts((prev) => [e.data.post, ...prev]);
+          if (e.data?.posts) setInstagramPosts(e.data.posts);
+        };
+      }
+    } catch {}
+
+    return () => {
+      window.removeEventListener(INSTAGRAM_BROADCAST_EVENT, handleLiveSyncEvent);
+      if (bc) bc.close();
     };
   }, []);
 
@@ -365,6 +408,7 @@ export default function App() {
           communityLooks={communityLooks}
           onOpenUgcModal={() => setUgcModalOpen(true)}
           onOpenProductByName={handleOpenProductByName}
+          brandConfig={brandConfig}
         />
       </main>
 
